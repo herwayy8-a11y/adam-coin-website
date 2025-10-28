@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adam (ADAM) – Digital Asset</title>
+  
+  <!-- Google Font for modern typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+/*
+ * Dark mode styling inspired by Pump.fun with a forward‑thinking twist.
+ * Colour palette and layout are defined via CSS variables for easy theming.
+ */
+
+:root {
+  --bg-color: #0c111f;
+  --sidebar-bg: #0a1329;
+  --card-bg: #101a35;
+  --input-bg: #0f2147;
+  --border-color: #173566;
+  --accent: #12c47e;
+  --accent-hover: #0fa46a;
+  --text-primary: #ffffff;
+  --text-secondary: #9bb5d2;
+  --radius: 8px;
+  --transition: 0.2s ease;
+}
+
+/* Base styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-color);
+  color: var(--text-primary);
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Sidebar styles */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 220px;
+  height: 100vh;
+  padding: 20px;
+  background: var(--sidebar-bg);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.sidebar .logo {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  padding: 8px 12px;
+  border-radius: var(--radius);
+  transition: background var(--transition), color var(--transition);
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--accent);
+}
+
+.nav-link.new::after {
+  content: 'NEW';
+  font-size: 10px;
+  color: var(--accent);
+  margin-left: auto;
+  background: rgba(18, 196, 126, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* Generic button styles */
+.btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: opacity var(--transition), background var(--transition);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn.primary-btn {
+  background: var(--accent);
+  color: var(--bg-color);
+}
+
+.btn.primary-btn:hover {
+  background: var(--accent-hover);
+}
+
+.btn.secondary-btn {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.btn.secondary-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.create-coin-btn {
+  margin-top: auto;
+  background: var(--accent);
+  color: var(--bg-color);
+}
+
+.create-coin-btn:hover {
+  background: var(--accent-hover);
+}
+
+/* Layout for main content */
+.main-content {
+  margin-left: 240px;
+  padding: 20px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.mobile-notice {
+  background: #051024;
+  padding: 8px 12px;
+  border-radius: var(--radius);
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.mobile-notice a {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.actions .btn + .btn {
+  margin-left: 10px;
+}
+
+/* Coin section styles */
+.coin-section {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.coin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.coin-header .info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.coin-header img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+
+.coin-header h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.coin-header h2 {
+  margin: 0;
+  font-size: 16px;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+.coin-header small {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--accent);
+}
+
+.stats {
+  display: flex;
+  gap: 40px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.stat h3 {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.stat p {
+  margin: 4px 0 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.curve-progress {
+  margin-top: 20px;
+}
+
+.curve-progress h3 {
+  margin: 0 0 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: var(--input-bg);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.progress-bar .progress {
+  height: 100%;
+  background: var(--accent);
+  border-radius: var(--radius);
+}
+
+.curve-progress p {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* Buy/Sell section styles */
+.buy-sell {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+/* Wallet connect row */
+.wallet-connect {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.wallet-connect #walletAddress {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-left: 12px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.buy-sell .tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 16px;
+}
+
+.buy-sell .tab {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-weight: 600;
+  border-bottom: 2px solid transparent;
+  transition: color var(--transition), border-color var(--transition);
+}
+
+.buy-sell .tab.active {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.input-row label {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.input-row input {
+  flex: 1;
+  background: var(--input-bg);
+  border: 1px solid var(--border-color);
+  padding: 10px;
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.input-row .unit {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+/* Chat & curve sections */
+.chat-section,
+.curve-section {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.chat-section h3,
+.curve-section h3 {
+  margin-top: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.chat-section p,
+.curve-section p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* Footer styles */
+footer {
+  margin-left: 240px;
+  padding: 20px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.cookie-banner {
+  background: var(--input-bg);
+  padding: 10px 20px;
+  border-radius: var(--radius);
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cookie-banner .cookie-actions .btn {
+  margin-left: 8px;
+}
+/* Coin icon placeholder */
+.coin-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--bg-color);
+}
+
+</style>
+</head>
+<body>
+  <!-- Sidebar navigation -->
+  <nav class="sidebar">
+    <div class="logo">Adam Coin</div>
+    <a href="#" class="nav-link"><span class="icon">🏠</span>Home</a>
+    <a href="#" class="nav-link"><span class="icon">📺</span>Livestreams</a>
+    <a href="#" class="nav-link"><span class="icon">⚙️</span>Advanced</a>
+    <a href="#" class="nav-link new"><span class="icon">💬</span>Chat</a>
+    <a href="#" class="nav-link"><span class="icon">👤</span>Profile</a>
+    <a href="#" class="nav-link"><span class="icon">🛠️</span>Support</a>
+    <a href="#" class="nav-link"><span class="icon">⋯</span>More</a>
+    <button class="btn create-coin-btn">Create coin</button>
+  </nav>
+
+  <main class="main-content">
+    <!-- Top bar with download notice and actions -->
+    <div class="topbar">
+      <div class="mobile-notice">🚀 Adam is better on mobile. faster trades, chat & more. <a href="#">Download now</a></div>
+      <div class="actions">
+        <button class="btn secondary-btn">Create coin</button>
+        <button class="btn secondary-btn">Log in</button>
+      </div>
+    </div>
+
+    <!-- Coin overview section -->
+    <section class="coin-section">
+      <div class="coin-header">
+        <div class="info">
+          <div class="coin-icon">A</div>
+          <div>
+            <h1>Adam</h1>
+            <h2>ADAM</h2>
+            <small>Just launched • Fair Launch</small>
+          </div>
+        </div>
+        <button class="btn share-btn">Share</button>
+      </div>
+      <!-- Stats row -->
+      <div class="stats">
+        <div class="stat">
+          <h3>Market Cap</h3>
+          <p>$0</p>
+        </div>
+        <div class="stat">
+          <h3>Price</h3>
+          <!-- The span below will be updated via JavaScript with real‑time data -->
+          <p class="price-value">$0.00</p>
+        </div>
+        <div class="stat">
+          <h3>24h Volume</h3>
+          <p>$0</p>
+        </div>
+        <div class="stat">
+          <h3>Holders</h3>
+          <p>0</p>
+        </div>
+      </div>
+      <!-- Bonding curve progress -->
+      <div class="curve-progress">
+        <h3>Bonding Curve Progress</h3>
+        <div class="progress-bar">
+          <div class="progress" style="width: 10%"></div>
+        </div>
+        <p><span id="curveValue">10%</span> filled</p>
+      </div>
+    </section>
+
+    <!-- Buy/Sell section -->
+    <section class="buy-sell">
+      <div class="wallet-connect">
+        <button class="btn secondary-btn" id="connectWallet">Connect Wallet</button>
+        <span id="walletAddress"></span>
+      </div>
+      <div class="tabs">
+        <button class="tab active" data-mode="buy">Buy</button>
+        <button class="tab" data-mode="sell">Sell</button>
+      </div>
+      <div class="input-row">
+        <label for="amount">Amount:</label>
+        <input id="amount" type="number" min="0" step="0.01" placeholder="0.00" />
+        <span class="unit">SOL</span>
+      </div>
+      <button class="btn primary-btn">Log in to trade</button>
+    </section>
+
+    <!-- Chat section -->
+    <section class="chat-section">
+      <h3>Adam chat</h3>
+      <p>Discuss with the Adam community. Coming soon!</p>
+      <button class="btn secondary-btn">Join chat</button>
+    </section>
+
+    <!-- Bonding curve details section -->
+    <section class="curve-section">
+      <h3>Bonding curve details</h3>
+      <p>The bonding curve controls the price of ADAM based on demand. As more people buy, the price gradually increases. When users sell back into the curve, the price decreases accordingly. This mechanism enables fair distribution and prevents whales from dominating the supply.</p>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="cookie-banner">
+      <div>This website uses cookies to improve your experience.</div>
+      <div class="cookie-actions">
+        <button class="btn secondary-btn" id="acceptCookies">Accept All</button>
+        <button class="btn secondary-btn" id="rejectCookies">Reject</button>
+      </div>
+    </div>
+    <p>© 2025 Adam Coin. All rights reserved.</p>
+  </footer>
+  
+<script>
+// Basic interactivity for the Adam coin landing page
+// Handles tab switching in the buy/sell box and cookie banner dismissal.
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Tab switching logic
+  const tabs = document.querySelectorAll('.buy-sell .tab');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      // Here we could add logic to swap forms or update UI
+      // For now, it's purely cosmetic.
+    });
+  });
+
+  // Cookie banner buttons
+  const acceptBtn = document.getElementById('acceptCookies');
+  const rejectBtn = document.getElementById('rejectCookies');
+  const cookieBanner = document.querySelector('.cookie-banner');
+
+  function hideCookieBanner() {
+    cookieBanner.style.display = 'none';
+  }
+
+  acceptBtn.addEventListener('click', hideCookieBanner);
+  rejectBtn.addEventListener('click', hideCookieBanner);
+
+  /* -------------------------------------------------------------------
+   * Real‑time price feed using the CoinGecko API.  The API endpoint is
+   * `https://api.coingecko.com/api/v3/simple/price` which returns current
+   * pricing data for specified coins and fiat currencies【590736300280661†L52-L63】.
+   * To update the displayed price every minute, we fetch the value for a
+   * chosen token ID (e.g. solana or bitcoin) and update the `.price-value`
+   * element. Replace `solana` with your token's Coingecko ID once listed.
+   */
+  const priceDisplay = document.querySelector('.price-value');
+  async function fetchPrice() {
+    const coinId = 'solana'; // change this to your coin's ID when available
+    const vsCurrency = 'usd';
+    const apiUrl = `https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=${vsCurrency}`;
+    try {
+      const response = await fetch(apiUrl);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      if (data && data[coinId]) {
+        const price = data[coinId][vsCurrency];
+        priceDisplay.textContent = `$${price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 })}`;
+      }
+    } catch (err) {
+      console.error('Error fetching price:', err);
+    }
+  }
+  // Fetch immediately and then every 60 seconds
+  fetchPrice();
+  setInterval(fetchPrice, 60000);
+
+  /* -------------------------------------------------------------------
+   * Wallet integration (MetaMask example).  When a user clicks the
+   * “Connect Wallet” button, the browser will request account access via
+   * the Ethereum provider injected by MetaMask.  If successful, the first
+   * account address is displayed.  No transactions are executed.
+   */
+  const connectBtn = document.getElementById('connectWallet');
+  const walletAddressEl = document.getElementById('walletAddress');
+  if (connectBtn) {
+    connectBtn.addEventListener('click', async () => {
+      if (typeof window.ethereum === 'undefined') {
+        alert('MetaMask is not installed. Please install it to connect.');
+        return;
+      }
+      try {
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        const account = accounts[0];
+        walletAddressEl.textContent = `${account.slice(0, 6)}…${account.slice(-4)}`;
+      } catch (err) {
+        console.error('Wallet connection failed:', err);
+      }
+    });
+  }
+});
+</script>
+</body>
+</html>
